@@ -80,27 +80,22 @@ class CifarDataLoader:
 
         num_samples = train_data.shape[0]
         np.random.seed(self.random_seed)
-        train_set_index = np.random.choice(num_samples, int(num_samples * 0.8), replace=False)
+        train_set_index = np.random.choice(num_samples, int(num_samples * 1.0), replace=False)
         index = np.arange(num_samples)
-        val_set_index = np.delete(index, train_set_index)
 
-        train_set, val_set = train_data[train_set_index], train_data[val_set_index]
-        train_labels, val_labels = noise_labels[train_set_index], noise_labels[val_set_index]
-        train_paths, val_paths = np.array(train_paths)[train_set_index], np.array(train_paths)[val_set_index]
+        train_set = train_data
+        train_labels = noise_labels
+        train_paths = np.array(train_paths)
 
-        return train_set, train_labels, train_paths, val_set, val_labels, val_paths, test_data, test_labels, test_paths
+        return train_set, train_labels, train_paths, test_data, test_labels, test_paths
 
     def run(self, mode):
-        train_set, train_labels, train_paths, val_set, val_labels, val_paths, test_data, test_labels, test_paths = self.load_data()
+        train_set, train_labels, train_paths, test_data, test_labels, test_paths = self.load_data()
 
         if mode == 'train':
             dataset = CifarDataset(train_set, train_labels, train_paths, transform=self.transform_train)
             dataloader = DataLoader(dataset, batch_size=self.batch_size,
                                     shuffle=True, num_workers=self.num_workers)
-        elif mode == 'val':
-            dataset = CifarDataset(val_set, val_labels, val_paths, transform=self.transform_test)
-            dataloader = DataLoader(dataset, batch_size=1000,
-                                    shuffle=False, num_workers=self.num_workers)
         elif mode == 'test':
             dataset = CifarDataset(test_data, test_labels, test_paths, transform=self.transform_test)
             dataloader = DataLoader(dataset, batch_size=1000,
