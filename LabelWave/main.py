@@ -36,7 +36,6 @@ for iternum in range(0,1):
 
     test_loader = loader.run('test')
     train_loader = loader.run('train')
-    val_loader = loader.run('val')
 
     def build_model():
         from resnet import ResNet18
@@ -82,20 +81,6 @@ for iternum in range(0,1):
         with torch.no_grad():
             correct = 0
             total = 0
-            for batch_idx, (inputs, labels, _) in enumerate(val_loader):
-                net.eval()
-                images, labels = inputs, labels
-                images, labels = images.cuda(), labels.cuda()
-                outputs = net(images)
-                loss = criterion(outputs, labels)
-                _, predicted = torch.max(outputs.data, 1)
-                total += labels.size(0)
-                correct += (predicted == labels).sum()
-                val_acc = 100 * correct / total
-                val_acc = val_acc.item()
-
-            correct = 0
-            total = 0
             for batch_idx, (inputs, labels, _) in enumerate(test_loader):
                 net.eval()
                 images, labels = inputs, labels
@@ -107,8 +92,8 @@ for iternum in range(0,1):
                 correct += (predicted == labels).sum()
                 test_acc = 100 * correct / total
                 test_acc = test_acc.item()
-        print('ValAcc：%.3f%%' % val_acc, 'TestAcc：%.3f%%' % test_acc)
+        print('TestAcc：%.3f%%' % test_acc)
 
         with open(csvfile, 'a', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow([epoch + 1, labelwave, val_acc, test_acc])
+            writer.writerow([epoch + 1, labelwave, test_acc])
