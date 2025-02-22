@@ -28,4 +28,7 @@ You should put the [CIFAR datasets](https://www.cs.toronto.edu/~kriz/cifar.html)
 Here is a training example: 
 ```bash
 python3 main.py
+```
+
+Contact: Suqin Yuan (suqinyuan.cs@gmail.com).
  
