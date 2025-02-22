@@ -3,7 +3,7 @@
 <p align="center"> <a href="https://suqinyuan.github.io">Suqin Yuan</a>,  <a href="https://lfeng1995.github.io">Lei Feng</a>, <a href="https://tongliang-liu.github.io">Tongliang Liu</a> </p>
 
 ### TL;DR
-The Label Wave method enables early stopping for learning with noisy labels by analyzing training dynamics, eliminating the need for separate validation data.
+The Label Wave method enables early stopping by analyzing training dynamics in learning with noisy labels, eliminating the need for separate validation data.
 
 ### BibTeX
 ```bibtex
